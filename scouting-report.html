@@ -145,45 +145,60 @@
 
   .footer-note{ margin-top:26px; padding-top:22px; font-size:12px; color:var(--ink-60); line-height:1.6; border-top:1px dashed var(--ink-12); }
 
-  /* ---------- FOOTER CTA CARD ---------- */
-  .cta-card {
-    background: var(--card);
-    border: 1px solid var(--ink-12);
-    border-radius: 16px;
-    padding: 36px 28px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    color: #F2F5EE;
+  /* ---------- FOOTER CTA ---------- */
+  .cta-card{
+    background:var(--card);
+    border:1px solid var(--ink-12);
+    border-radius:14px;
+    padding:40px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
   }
 
-  .cta-card .subtext {
-    font-size: 14.5px;
-    color: rgba(242, 245, 238, 0.85);
-    max-width: 520px;
-    line-height: 1.5;
+  .cta-card .banner-text{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:700;
+    font-size:22px;
+    text-transform:uppercase;
+    max-width:520px;
   }
 
-  .cta-button {
-    display: inline-flex;
-    align-items: center;
-    background: var(--lime);
-    color: var(--ink);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    padding: 14px 28px;
-    border-radius: 99px;
-    text-decoration: none;
-    transition: transform 0.15s ease, background 0.15s ease;
+  .cta-card .subtext{
+    color:var(--ink-60);
+    font-size:14px;
+    max-width:460px;
+    line-height:1.55;
+    margin-bottom:14px;
   }
 
-  .cta-button:hover {
-    background: #e2f263;
-    transform: translateY(-2px);
+  .cta-button{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--ink);
+    color:var(--lime);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    padding:14px 24px;
+    border-radius:100px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.15s ease, opacity 0.15s ease;
+  }
+  .cta-button:hover{
+    opacity:0.88;
+    transform:translateY(-1px);
+  }
+  .cta-button:focus-visible{
+    outline:2px solid var(--deep);
+    outline-offset:3px;
   }
 
   @media (max-width:720px){
