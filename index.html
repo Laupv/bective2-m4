@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Match Preview: Bective 2 vs Stratford 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2F5EE;
+    --card:#FFFFFF;
+    --ink:#0B2117;
+    --ink-60:rgba(11,33,23,0.6);
+    --ink-35:rgba(11,33,23,0.35);
+    --ink-12:rgba(11,33,23,0.12);
+    --lime:#D5E94A;
+    --deep:#1B5C3B;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:56px 24px 96px;
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--deep);
+    font-weight:600;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top:8px;
+  }
+
+  .hero h1{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:800;
+    font-size:clamp(40px,7vw,84px);
+    line-height:0.95;
+    letter-spacing:-0.01em;
+    margin:14px 0 18px;
+    text-transform:uppercase;
+  }
+
+  .court-line{
+    height:8px;
+    width:100%;
+    max-width:420px;
+    margin:18px 0 22px;
+    background-image:repeating-linear-gradient(
+      90deg,
+      var(--deep) 0px,
+      var(--deep) 14px,
+      transparent 14px,
+      transparent 22px
+    );
+    border-radius:4px;
+  }
+
+  .hero-desc{
+    font-size:16px;
+    color:var(--ink-60);
+    max-width:560px;
+    line-height:1.55;
+    margin-bottom:32px;
+  }
+
+  .hero-stat-card{
+    background:var(--lime);
+    border-radius:14px;
+    padding:32px 36px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:24px;
+  }
+
+  .hero-stat-card .big-stat{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:800;
+    font-size:clamp(56px,9vw,96px);
+    line-height:0.9;
+    letter-spacing:-0.01em;
+  }
+
+  .hero-stat-card .stat-sub{
+    font-size:15px;
+    max-width:360px;
+    line-height:1.5;
+    font-weight:500;
+    color:var(--ink);
+  }
+
+  /* ---------- DIVIDER ---------- */
+  .divider{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:64px 0 36px;
+  }
+  .divider .post{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--ink);
+    flex:none;
+  }
+  .divider .line{
+    flex:1;
+    border-top:2px dashed var(--ink-35);
+  }
+  .divider .tag{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    color:var(--ink-60);
+    font-weight:600;
+  }
+
+  /* ---------- SECTION HEADER ---------- */
+  .section-head h2{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:800;
+    font-size:clamp(30px,4.5vw,46px);
+    text-transform:uppercase;
+    margin:6px 0 8px;
+    line-height:1;
+  }
+  .section-head p{
+    color:var(--ink-60);
+    font-size:15px;
+    max-width:520px;
+    margin:0 0 32px;
+    line-height:1.5;
+  }
+
+  /* ---------- PAIR CARDS ---------- */
+  .card-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+
+  .pair-card{
+    background:var(--card);
+    border:1px solid var(--ink-12);
+    border-radius:14px;
+    padding:26px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .pair-card .card-eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-60);
+    font-weight:600;
+  }
+
+  .pair-card h3{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:700;
+    font-size:26px;
+    margin:0;
+    text-transform:uppercase;
+  }
+
+  .pair-card .anchor{
+    font-size:14px;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  .pill-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+
+  .pill{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    padding:5px 10px;
+    border-radius:100px;
+    border:1px solid var(--ink-12);
+    font-weight:500;
+    color:var(--ink);
+    background:var(--bg);
+  }
+
+  .pill.form{
+    background:var(--ink);
+    color:var(--lime);
+    border-color:var(--ink);
+  }
+
+  .tactical-key{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--deep);
+    font-weight:700;
+    padding-top:2px;
+    border-top:1px solid var(--ink-12);
+    margin-top:4px;
+  }
+
+  .pair-card .detail{
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--ink-60);
+  }
+
+  /* ---------- DATA TABLE / BARS ---------- */
+  .data-card{
+    background:var(--card);
+    border:1px solid var(--ink-12);
+    border-radius:14px;
+    padding:32px;
+  }
+
+  .data-row{
+    padding:18px 0;
+    border-bottom:1px solid var(--ink-12);
+  }
+  .data-row:last-child{ border-bottom:none; }
+
+  .data-row-label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-60);
+    font-weight:600;
+    margin-bottom:12px;
+  }
+
+  .bar-compare{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .bar-line{
+    display:grid;
+    grid-template-columns:120px 1fr 70px;
+    align-items:center;
+    gap:12px;
+  }
+
+  .bar-line .team-name{
+    font-size:13px;
+    font-weight:600;
+  }
+
+  .bar-track{
+    height:14px;
+    background:var(--bg);
+    border-radius:100px;
+    overflow:hidden;
+    border:1px solid var(--ink-12);
+  }
+
+  .bar-fill{
+    height:100%;
+    border-radius:100px;
+  }
+  .bar-fill.bective{ background:var(--deep); }
+  .bar-fill.stratford{ background:var(--lime); }
+
+  .bar-line .val{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px;
+    font-weight:600;
+    text-align:right;
+  }
+
+  .footnote{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    color:var(--ink-60);
+    margin-top:18px;
+    line-height:1.5;
+  }
+
+  .strength-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:8px;
+  }
+
+  .strength-box{
+    background:var(--bg);
+    border-radius:10px;
+    padding:16px 18px;
+    border:1px solid var(--ink-12);
+  }
+
+  .strength-box .label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-60);
+    margin-bottom:6px;
+    font-weight:600;
+  }
+  .strength-box .value{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:700;
+    font-size:19px;
+    text-transform:uppercase;
+    line-height:1.1;
+  }
+
+  /* ---------- CALLOUT BANNER ---------- */
+  .callout{
+    background:var(--deep);
+    border-radius:14px;
+    padding:36px;
+    color:#FFFFFF;
+  }
+
+  .callout .callout-eyebrow{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--lime);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+
+  .callout h3{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:800;
+    font-size:clamp(26px,4vw,38px);
+    margin:0 0 24px;
+    text-transform:uppercase;
+    color:#FFFFFF;
+  }
+
+  .callout-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+  }
+
+  .callout-item{
+    display:flex;
+    gap:16px;
+    align-items:flex-start;
+  }
+
+  .callout-item .num{
+    font-family:"IBM Plex Mono",monospace;
+    font-weight:700;
+    font-size:14px;
+    color:var(--deep);
+    background:var(--lime);
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex:none;
+  }
+
+  .callout-item .body strong{
+    display:block;
+    font-size:15px;
+    margin-bottom:4px;
+    color:var(--lime);
+    font-weight:600;
+  }
+
+  .callout-item .body p{
+    margin:0;
+    font-size:14px;
+    line-height:1.55;
+    color:rgba(255,255,255,0.85);
+  }
+
+  /* ---------- FOOTER CTA ---------- */
+  .cta-card{
+    background:var(--card);
+    border:1px solid var(--ink-12);
+    border-radius:14px;
+    padding:40px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+  }
+
+  .cta-card .banner-text{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:700;
+    font-size:22px;
+    text-transform:uppercase;
+    max-width:520px;
+  }
+
+  .cta-card .subtext{
+    color:var(--ink-60);
+    font-size:14px;
+    max-width:460px;
+    line-height:1.55;
+    margin-bottom:14px;
+  }
+
+  .cta-button{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--ink);
+    color:var(--lime);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    padding:14px 24px;
+    border-radius:100px;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+    transition:transform 0.15s ease, opacity 0.15s ease;
+  }
+  .cta-button:hover{
+    opacity:0.88;
+    transform:translateY(-1px);
+  }
+  .cta-button:focus-visible{
+    outline:2px solid var(--deep);
+    outline-offset:3px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 720px){
+    .card-grid{ grid-template-columns:1fr; }
+    .strength-grid{ grid-template-columns:1fr; }
+    .bar-line{ grid-template-columns:88px 1fr 56px; }
+    .hero-stat-card{ padding:26px 22px; }
+    .data-card{ padding:22px; }
+    .divider .tag{ font-size:9.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .cta-button{ transition:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="eyebrow">DLTC 2026 Mixed League • Class 4 • Section G</div>
+    <h1>Match Preview:<br>Bective 2 vs Stratford 3</h1>
+    <div class="court-line"></div>
+    <p class="hero-desc">Executive tactical briefing and statistical breakdown ahead of Friday's tie.</p>
+
+    <div class="hero-stat-card">
+      <div class="big-stat">0 FOR 9</div>
+      <div class="stat-sub">Stratford 3 has lost all 9 played match ties on court this season (1 administrative win on record).</div>
+    </div>
+  </section>
+
+  <!-- DIVIDER 01 -->
+  <div class="divider">
+    <div class="post"></div>
+    <div class="line"></div>
+    <div class="tag">[ Section 01 // Pair Breakdown ]</div>
+    <div class="line"></div>
+    <div class="post"></div>
+  </div>
+
+  <!-- SECTION 01 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">Court-by-court scouting</div>
+      <h2>Pair-by-Pair Breakdown</h2>
+      <p>Where to attack and how, across all three courts.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="pair-card">
+        <div class="card-eyebrow">1st Doubles</div>
+        <h3>Court 1</h3>
+        <div class="anchor">Target Anchor: Sam Stretch</div>
+        <div class="pill-row">
+          <span class="pill form">2-4 SETS</span>
+          <span class="pill">HIGH ROTATION</span>
+        </div>
+        <div class="tactical-key">Isolate &amp; Bypass</div>
+        <p class="detail">Sam Stretch is their key court anchor. Target his partner's backhand on second serves and isolate them in cross-court rallies to keep Stretch from poaching and dictating play at the net.</p>
+      </div>
+
+      <div class="pair-card">
+        <div class="card-eyebrow">2nd Doubles</div>
+        <h3>Court 2</h3>
+        <div class="anchor">Target Pair: Butler &amp; O'Conghaile</div>
+        <div class="pill-row">
+          <span class="pill form">1-6 SETS</span>
+          <span class="pill">STRUGGLING LINE</span>
+        </div>
+        <div class="tactical-key">Net Aggression</div>
+        <p class="detail">Weakest pairing in extended baseline rallies. Avoid passive groundstroke exchanges — pounce on soft second serves and force early net-volley exchanges.</p>
+      </div>
+
+      <div class="pair-card">
+        <div class="card-eyebrow">3rd Doubles</div>
+        <h3>Court 3</h3>
+        <div class="anchor">Target Anchor: Jan Redmond</div>
+        <div class="pill-row">
+          <span class="pill form">1-6 SETS</span>
+          <span class="pill">SLOW STARTERS</span>
+        </div>
+        <div class="tactical-key">Fast Strike</div>
+        <p class="detail">Redmond gets into matches slowly, dropping opening sets heavily (1-6, 1-6, 3-6). Target her partner early to break their momentum in the first 4 games.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER 02 -->
+  <div class="divider">
+    <div class="post"></div>
+    <div class="line"></div>
+    <div class="tag">[ Section 02 // Head-to-Head Data ]</div>
+    <div class="line"></div>
+    <div class="post"></div>
+  </div>
+
+  <!-- SECTION 02 -->
+  <section>
+    <div class="section-head">
+      <div class="eyebrow">Season snapshot</div>
+      <h2>Data &amp; Head-to-Head</h2>
+      <p>Set and game win rates, and resilience under pressure, side by side.</p>
+    </div>
+
+    <div class="data-card">
+      <div class="data-row">
+        <div class="data-row-label">Set Win Rate</div>
+        <div class="bar-compare">
+          <div class="bar-line">
+            <span class="team-name">Bective 2</span>
+            <div class="bar-track"><div class="bar-fill bective" style="width:14.3%;"></div></div>
+            <span class="val">14.3%</span>
+          </div>
+          <div class="bar-line">
+            <span class="team-name">Stratford 3</span>
+            <div class="bar-track"><div class="bar-fill stratford" style="width:21.1%;"></div></div>
+            <span class="val">21.1%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-row">
+        <div class="data-row-label">Game Win Rate</div>
+        <div class="bar-compare">
+          <div class="bar-line">
+            <span class="team-name">Bective 2</span>
+            <div class="bar-track"><div class="bar-fill bective" style="width:33.3%;"></div></div>
+            <span class="val">33.3%</span>
+          </div>
+          <div class="bar-line">
+            <span class="team-name">Stratford 3</span>
+            <div class="bar-track"><div class="bar-fill stratford" style="width:28.5%;"></div></div>
+            <span class="val">28.5%*</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-row">
+        <div class="data-row-label">3-Set Matches Fought</div>
+        <div class="bar-compare">
+          <div class="bar-line">
+            <span class="team-name">Bective 2</span>
+            <div class="bar-track"><div class="bar-fill bective" style="width:100%;"></div></div>
+            <span class="val">3 / 3</span>
+          </div>
+          <div class="bar-line">
+            <span class="team-name">Stratford 3</span>
+            <div class="bar-track"><div class="bar-fill stratford" style="width:66.6%;"></div></div>
+            <span class="val">2 / 3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="strength-grid">
+        <div class="strength-box">
+          <div class="label">Bective 2 — Primary Strength</div>
+          <div class="value">Top Court Stamina</div>
+        </div>
+        <div class="strength-box">
+          <div class="label">Stratford 3 — Primary Strength</div>
+          <div class="value">3-Set Resilience</div>
+        </div>
+      </div>
+
+      <p class="footnote">*Excludes penalized match games where score was 0-36 recorded on match sheet.</p>
+    </div>
+  </section>
+
+  <!-- DIVIDER 03 -->
+  <div class="divider">
+    <div class="post"></div>
+    <div class="line"></div>
+    <div class="tag">[ Section 03 // Winning Blueprint ]</div>
+    <div class="line"></div>
+    <div class="post"></div>
+  </div>
+
+  <!-- SECTION 03 -->
+  <section>
+    <div class="callout">
+      <div class="callout-eyebrow">Bective 2 game plan</div>
+      <h3>Winning Blueprint</h3>
+      <div class="callout-list">
+        <div class="callout-item">
+          <div class="num">1</div>
+          <div class="body">
+            <strong>Secure Court 1 Early</strong>
+            <p>Julia Yavtushenko &amp; Alan Reilly are Bective's anchor pair, pushing every opponent to 3 sets. Target Court 1 for a statement win.</p>
+          </div>
+        </div>
+        <div class="callout-item">
+          <div class="num">2</div>
+          <div class="body">
+            <strong>Attack Set 1 Across All Courts</strong>
+            <p>Stratford drops Set 1 almost universally across all positions. Jump out to aggressive early leads.</p>
+          </div>
+        </div>
+        <div class="callout-item">
+          <div class="num">3</div>
+          <div class="body">
+            <strong>Control the Net on Courts 2 &amp; 3</strong>
+            <p>High pressure at the net forces high unforced error counts from Stratford's lower-court baseliners.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER 04 -->
+  <div class="divider">
+    <div class="post"></div>
+    <div class="line"></div>
+    <div class="tag">[ Full Report ]</div>
+    <div class="line"></div>
+    <div class="post"></div>
+  </div>
+
+  <!-- FOOTER CTA -->
+  <section>
+    <div class="cta-card">
+      <div class="banner-text">This infographic is an executive summary brief of our opponent data.</div>
+      <div class="subtext">Access complete match sheet histories, detailed game breakdowns, and full player rosters on the live web report.</div>
+      <a class="cta-button" href="https://laupv.github.io/bective2-m4-scouting-report/" target="_blank" rel="noopener noreferrer">View Full Scouting Report →</a>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
