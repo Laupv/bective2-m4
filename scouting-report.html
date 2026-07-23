@@ -145,6 +145,47 @@
 
   .footer-note{ margin-top:26px; padding-top:22px; font-size:12px; color:var(--ink-60); line-height:1.6; border-top:1px dashed var(--ink-12); }
 
+/* ---------- FOOTER CTA CARD ---------- */
+  .cta-card {
+    background: var(--court);
+    border: 1px solid var(--ink-12);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    color: #F2F5EE;
+  }
+
+  .cta-card .subtext {
+    font-size: 14.5px;
+    color: rgba(242, 245, 238, 0.85);
+    max-width: 520px;
+    line-height: 1.5;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    background: var(--lime);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 14px 28px;
+    border-radius: 99px;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+
+  .cta-button:hover {
+    background: #e2f263;
+    transform: translateY(-2px);
+  }
+  
   @media (max-width:720px){
     .intel-grid, .strategy-grid{ grid-template-columns:1fr; }
     table{ font-size:12px; }
