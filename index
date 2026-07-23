@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Stratford 3 — Scouting Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F2F5EE;
+    --card:#FFFFFF;
+    --ink:#0B2117;
+    --ink-60:rgba(11,33,23,0.62);
+    --ink-35:rgba(11,33,23,0.35);
+    --ink-12:rgba(11,33,23,0.12);
+    --lime:#D5E94A;
+    --court:#1B5C3B;
+    --court-08:rgba(27,92,59,0.08);
+    --track:#E9EDE1;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .page{ max-width:960px; margin:0 auto; padding:0 28px 80px; }
+
+  h1,h2,h3{ font-family:'Big Shoulders Display', sans-serif; letter-spacing:0.01em; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+
+  /* ---------- NET DIVIDER (signature element) ---------- */
+  .net-divider{ display:flex; align-items:center; gap:14px; margin:56px 0 34px; }
+  .net-divider .line{ flex:1; height:0; border-top:2px dashed var(--ink-35); }
+  .net-divider .post{ width:9px; height:9px; border-radius:50%; background:var(--court); flex:0 0 auto; }
+  .net-divider .tag{ font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-60); white-space:nowrap; }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:64px 0 40px; border-bottom:2px dashed var(--ink-12); }
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--court); background:var(--court-08); padding:6px 12px; border-radius:99px; margin-bottom:22px;
+  }
+  .hero-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--lime); border:1.5px solid var(--court); }
+  .hero h1{ font-size:clamp(38px, 6.2vw, 64px); font-weight:800; line-height:0.98; color:var(--ink); max-width:820px; }
+  .hero h1 .accent{ color:var(--court); }
+  .hero .subline{ margin-top:22px; display:flex; flex-direction:column; gap:6px; max-width:600px; }
+  .hero .subline p{ font-size:15px; color:var(--ink-60); font-weight:500; }
+  .hero .subline p strong{ color:var(--ink); font-weight:700; }
+  .court-strip{
+    margin-top:34px; height:8px; border-radius:99px;
+    background:repeating-linear-gradient(90deg, var(--court) 0px, var(--court) 46px, var(--lime) 46px, var(--lime) 54px, var(--court) 54px, var(--court) 100px);
+    opacity:0.9;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-label{ font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--court); font-weight:600; margin-bottom:8px; }
+  .section-title{ font-size:clamp(26px, 4vw, 36px); font-weight:700; color:var(--ink); margin-bottom:10px; }
+  .section-desc{ font-size:14.5px; color:var(--ink-60); max-width:600px; margin-bottom:28px; }
+
+  .card{ background:var(--card); border:1px solid var(--ink-12); border-radius:14px; padding:24px; }
+
+  /* ---------- Court profile cards (pair breakdown) ---------- */
+  .court-card{
+    background:var(--card); border:1px solid var(--ink-12); border-radius:16px; padding:26px; margin-bottom:18px;
+  }
+  .court-card-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
+  .court-title-row{ display:flex; align-items:center; gap:12px; }
+  .court-num{
+    width:42px; height:42px; border-radius:50%; border:2px solid var(--court); color:var(--court);
+    display:flex; align-items:center; justify-content:center; font-family:'Big Shoulders Display'; font-weight:800; font-size:17px; flex:0 0 auto;
+  }
+  .court-title{ font-size:20px; font-weight:800; }
+  .court-record{ display:flex; gap:10px; flex-wrap:wrap; }
+  .rec-chip{
+    font-family:'IBM Plex Mono'; font-size:11.5px; font-weight:600; padding:6px 12px; border-radius:99px;
+    background:var(--track); color:var(--ink-60); white-space:nowrap;
+  }
+  .rec-chip.loss{ background:rgba(11,33,23,0.06); color:var(--ink-35); }
+  .rec-chip.win{ background:rgba(213,233,74,0.4); color:#4c5410; }
+
+  .rotated-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .rot-chip{
+    font-size:12px; font-weight:600; padding:7px 12px; border-radius:99px; border:1px dashed var(--ink-35);
+    color:var(--ink); background:var(--bg);
+  }
+
+  .cc-block-title{ font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:var(--ink-60); font-weight:700; margin-bottom:8px; }
+  .analysis-list{ list-style:none; display:flex; flex-direction:column; gap:9px; margin-bottom:18px; }
+  .analysis-list li{ font-size:13.5px; color:var(--ink); line-height:1.55; padding-left:16px; position:relative; }
+  .analysis-list li::before{ content:"•"; position:absolute; left:0; color:var(--court); font-weight:700; }
+  .analysis-list li b{ font-weight:700; }
+
+  .takeaway{
+    background:var(--court); color:#F2F5EE; border-radius:12px; padding:16px 18px; font-size:13.5px; line-height:1.6;
+  }
+  .takeaway .tk-label{
+    font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--lime); font-weight:700; margin-bottom:6px; display:block;
+  }
+
+  /* ---------- Team comparison table ---------- */
+  .table-wrap{ background:var(--card); border:1px solid var(--ink-12); border-radius:14px; overflow:hidden; }
+  table{ width:100%; border-collapse:collapse; }
+  thead th{
+    text-align:left; font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--ink-60); font-weight:600; padding:14px 16px; border-bottom:1px solid var(--ink-12); background:var(--track);
+  }
+  thead th:not(:first-child), tbody td:not(:first-child){ text-align:center; }
+  tbody td{ padding:14px 16px; font-size:13.5px; border-bottom:1px solid var(--ink-12); vertical-align:middle; }
+  tbody tr:last-child td{ border-bottom:none; }
+  td.feature{ font-weight:700; color:var(--ink); }
+  td.bective{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--court); }
+  td.stratford{ font-family:'IBM Plex Mono'; font-weight:600; color:var(--ink-60); }
+  .table-foot{ padding:14px 20px; font-size:11px; color:var(--ink-35); font-style:italic; }
+
+  /* ---------- Intel cards ---------- */
+  .intel-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .intel-card{ background:var(--card); border:1px solid var(--ink-12); border-radius:14px; padding:22px; }
+  .intel-card.highlight{ border:1.5px solid var(--court); }
+  .intel-kicker{ font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--court); font-weight:600; margin-bottom:8px; }
+  .intel-name{ font-family:'Big Shoulders Display'; font-weight:800; font-size:19px; margin-bottom:12px; line-height:1.15; }
+  .intel-card p{ font-size:13px; color:var(--ink-60); line-height:1.6; }
+  .intel-card p + p{ margin-top:8px; }
+
+  /* ---------- Strategy cards ---------- */
+  .strategy-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .strategy-card{
+    background:var(--lime); border-radius:16px; padding:22px; display:flex; flex-direction:column; gap:12px;
+  }
+  .strategy-card .st-court{ font-family:'IBM Plex Mono'; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; color:#4c5410; }
+  .strategy-card .st-pair{ font-family:'Big Shoulders Display'; font-weight:800; font-size:19px; color:var(--ink); line-height:1.15; }
+  .strategy-card p{ font-size:13px; color:var(--ink); line-height:1.6; }
+
+  /* ---------- Footer / main message ---------- */
+  .message-banner{ margin-top:56px; background:var(--court); border-radius:16px; padding:36px 34px; color:#F2F5EE; }
+  .message-banner .mb-label{ font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:700; margin-bottom:12px; color:var(--lime); }
+  .message-banner p{ font-family:'Big Shoulders Display'; font-weight:700; font-size:clamp(20px,3.2vw,28px); line-height:1.25; max-width:760px; }
+
+  .footer-note{ margin-top:26px; padding-top:22px; font-size:12px; color:var(--ink-60); line-height:1.6; border-top:1px dashed var(--ink-12); }
+
+  @media (max-width:720px){
+    .intel-grid, .strategy-grid{ grid-template-columns:1fr; }
+    table{ font-size:12px; }
+    thead th, tbody td{ padding:10px; }
+    .court-card-head{ flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow"><span class="dot"></span>Opponent Scouting · Ahead of Friday's Fixture</div>
+    <h1>Stratford 3 <span class="accent">Scouting Report</span></h1>
+    <div class="subline">
+      <p><strong>Pair-by-pair breakdown</strong> of Stratford 3's rotation patterns and results.</p>
+      <p>Includes team-level comparison, key intel, and a recommended matchup strategy for Bective 2.</p>
+    </div>
+    <div class="court-strip"></div>
+  </div>
+
+  <!-- SECTION 1: PAIR BREAKDOWN -->
+  <div class="net-divider"><div class="line"></div><div class="post"></div><span class="tag">Section 01</span><div class="post"></div><div class="line"></div></div>
+
+  <div class="section-label">Opponent Rotation</div>
+  <h2 class="section-title">Stratford 3: Pair-by-Pair Breakdown</h2>
+  <p class="section-desc">How Stratford 3 have rotated their pairings across all three doubles courts this season.</p>
+
+  <!-- 1st Doubles -->
+  <div class="court-card">
+    <div class="court-card-head">
+      <div class="court-title-row"><div class="court-num">1</div><div class="court-title">1st Doubles</div></div>
+      <div class="court-record">
+        <span class="rec-chip win">1 Win (penalty)</span>
+        <span class="rec-chip loss">2 Losses</span>
+        <span class="rec-chip">Sets 2–4</span>
+      </div>
+    </div>
+    <div class="rotated-row">
+      <span class="rot-chip">Corinna Butler / Sam Stretch</span>
+      <span class="rot-chip">Sinead Doyle / Sam Stretch</span>
+      <span class="rot-chip">Grace-Ann Fallon / Niall Briody</span>
+    </div>
+    <div class="cc-block-title">Analysis & Profile</div>
+    <ul class="analysis-list">
+      <li><b>Sam Stretch</b> is their anchor at 1st Doubles, playing 2 of 3 matches. Paired with Corinna Butler, they pushed Westwood Leopardstown 1 to a 7-6, 6-2 set win on court — later ruled a technical penalty win due to Westwood fielding an ineligible substitute.</li>
+      <li>Sinead Doyle / Sam Stretch were competitive against Newtown Park 2, losing 4-6, 3-6.</li>
+      <li>With Grace-Ann Fallon / Niall Briody fielded against Deerpark 4, they struggled heavily, dropping the match 6-2, 6-0.</li>
+    </ul>
+    <div class="takeaway">
+      <span class="tk-label">Tactical Takeaway</span>
+      Sam Stretch is their key anchor here. Target his partner's backhand on second serves and isolate them in cross-court rallies to keep Stretch from poaching and dictating play.
+    </div>
+  </div>
+
+  <!-- 2nd Doubles -->
+  <div class="court-card">
+    <div class="court-card-head">
+      <div class="court-title-row"><div class="court-num">2</div><div class="court-title">2nd Doubles</div></div>
+      <div class="court-record">
+        <span class="rec-chip loss">0 Wins</span>
+        <span class="rec-chip loss">3 Losses</span>
+        <span class="rec-chip">Sets 1–6</span>
+      </div>
+    </div>
+    <div class="rotated-row">
+      <span class="rot-chip">Eithne Butler / Eanna O'Conghaile — M1 & M2</span>
+      <span class="rot-chip">Heidi Riley / David O'Reilly — M3</span>
+    </div>
+    <div class="cc-block-title">Analysis & Profile</div>
+    <ul class="analysis-list">
+      <li><b>Eithne Butler / Eanna O'Conghaile</b> are a consistent pairing but have struggled to generate momentum, losing back-to-back matches in straight sets: 2-6, 2-6 vs Westwood and 1-6, 1-6 vs Newtown Park 2.</li>
+      <li><b>Heidi Riley / David O'Reilly</b> showed spark against Deerpark 4, snatching the opening set 6-4 before losing steam and dropping the next two, 4-6, 6-2.</li>
+    </ul>
+    <div class="takeaway">
+      <span class="tk-label">Tactical Takeaway</span>
+      This is historically Stratford's weakest line for holding serve and staying in long rallies. If Butler / O'Conghaile play, early aggressive net play disrupts their rhythm.
+    </div>
+  </div>
+
+  <!-- 3rd Doubles -->
+  <div class="court-card">
+    <div class="court-card-head">
+      <div class="court-title-row"><div class="court-num">3</div><div class="court-title">3rd Doubles</div></div>
+      <div class="court-record">
+        <span class="rec-chip loss">0 Wins</span>
+        <span class="rec-chip loss">3 Losses</span>
+        <span class="rec-chip">Sets 1–6</span>
+      </div>
+    </div>
+    <div class="rotated-row">
+      <span class="rot-chip">Jan Redmond / Karl Duffy — M1 & M3</span>
+      <span class="rot-chip">Jan Redmond / Conor Tuffy — M2</span>
+    </div>
+    <div class="cc-block-title">Analysis & Profile</div>
+    <ul class="analysis-list">
+      <li><b>Jan Redmond</b> is the permanent fixture at 3rd Doubles, rotating between Karl Duffy and Conor Tuffy as her partner.</li>
+      <li>Paired with Conor Tuffy, they pushed Newtown Park 2 to three sets, 3-6, 6-1, 2-6, showing real momentum shifts.</li>
+      <li>Paired with Karl Duffy, results were more decisive losses: 1-6, 3-6 vs Westwood and 1-6, 2-6 vs Deerpark 4.</li>
+    </ul>
+    <div class="takeaway">
+      <span class="tk-label">Tactical Takeaway</span>
+      Redmond gets into matches slowly, resulting in low game counts in opening sets — 1-6, 3-6, 1-6 across her three first sets. Target her partner early to break their momentum in the first four games.
+    </div>
+  </div>
+
+  <!-- SECTION 2: TEAM COMPARISON -->
+  <div class="net-divider"><div class="line"></div><div class="post"></div><span class="tag">Section 02</span><div class="post"></div><div class="line"></div></div>
+
+  <div class="section-label">Head-to-Head Metrics</div>
+  <h2 class="section-title">Team-Level Comparison</h2>
+  <p class="section-desc">How Bective 2 and Stratford 3 compare across the season so far.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>Bective 2</th><th>Stratford 3</th></tr></thead>
+      <tbody>
+        <tr><td class="feature">Set Win Rate</td><td class="bective">14.3% (3/21)</td><td class="stratford">21.1% (4/19)</td></tr>
+        <tr><td class="feature">Game Win Rate</td><td class="bective">33.3% (60/180)</td><td class="stratford">28.5% (37/130)*</td></tr>
+        <tr><td class="feature">3-Set Match Push</td><td class="bective">3 of 3 matches</td><td class="stratford">2 of 3 matches</td></tr>
+        <tr><td class="feature">Core Strength</td><td class="bective">1st Doubles stability</td><td class="stratford">Fight in 3-setters</td></tr>
+      </tbody>
+    </table>
+    <div class="table-foot">*Excludes penalised match games where score was recorded as 0-36 on the sheet.</div>
+  </div>
+
+  <!-- SECTION 3: KEY INTEL -->
+  <div class="net-divider"><div class="line"></div><div class="post"></div><span class="tag">Section 03</span><div class="post"></div><div class="line"></div></div>
+
+  <div class="section-label">Reading the Data</div>
+  <h2 class="section-title">Key Intel for Bective 2</h2>
+  <p class="section-desc">Three takeaways that should shape Friday's team selection and on-court game plan.</p>
+
+  <div class="intel-grid">
+    <div class="intel-card highlight">
+      <div class="intel-kicker">Bective's Edge</div>
+      <div class="intel-name">1st Doubles Advantage</div>
+      <p>Julia Yavtushenko & Alan Reilly are Bective's most reliable pair, pushing every 1st Doubles match to three sets — taking a set off Newtown Park 2, Donnybrook 3, and Westwood 1.</p>
+      <p>Stratford's 1st court struggles against aggressive standard play, making this Bective's highest-probability win if targeted early.</p>
+    </div>
+    <div class="intel-card">
+      <div class="intel-kicker">Opponent Weakness</div>
+      <div class="intel-name">Stratford's Consistent Gap</div>
+      <p>Stratford 3 have not won a single match on court in overall score across 9 played court ties this season — their one recorded win came from a DLTC administrative penalty against Westwood.</p>
+      <p>They drop the first set in nearly every match, across all three courts.</p>
+    </div>
+    <div class="intel-card">
+      <div class="intel-kicker">Shared Challenge</div>
+      <div class="intel-name">Bective's Depth Test</div>
+      <p>Bective 2 dropped 2nd and 3rd doubles against Westwood 1 without taking many games (0-6, 1-6 and 2-6, 1-6). Stratford's 2nd and 3rd pairs produce similarly lopsided scorelines against other opponents.</p>
+      <p>This match will likely be decided by who controls the net early in 2nd and 3rd doubles.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 4: STRATEGY -->
+  <div class="net-divider"><div class="line"></div><div class="post"></div><span class="tag">Section 04</span><div class="post"></div><div class="line"></div></div>
+
+  <div class="section-label">Game Plan</div>
+  <h2 class="section-title">Recommended Matchup Strategy for Friday</h2>
+  <p class="section-desc">Court-by-court recommendations based on the rotation patterns and results above.</p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <div class="st-court">1st Doubles</div>
+      <div class="st-pair">Yavtushenko & Reilly</div>
+      <p>Keep your established pairing intact. You have high set-taking endurance — isolate Stretch's partner on serve returns to take control of Set 1 early.</p>
+    </div>
+    <div class="strategy-card">
+      <div class="st-court">2nd Doubles</div>
+      <div class="st-pair">Riazantseva / Demina & Huerta</div>
+      <p>Stratford's 2nd doubles court gives away high unforced error counts under pressure. Avoid passive baseline rallies — push forward to the net and force volley exchanges early.</p>
+    </div>
+    <div class="strategy-card">
+      <div class="st-court">3rd Doubles</div>
+      <div class="st-pair">Pairing TBC</div>
+      <p>Target Jan Redmond's partner early in the match. Stratford's 3rd doubles often drops Set 1 heavily (1-6, 1-6, 3-6) — a strong, aggressive start in the first four games will likely close out the match early.</p>
+    </div>
+  </div>
+
+  <div class="message-banner">
+    <div class="mb-label">Main Message</div>
+    <p>“Bective 2 hold the statistical edge at 1st Doubles and face an opponent who has yet to win a match on court — an aggressive, early start on every line gives the best route to Bective's first win.”</p>
+  </div>
+
+  <div class="footer-note">
+    Scouting analysis based on Stratford 3's first three Mixed League matches this season. Rotation patterns and tactical notes are intended to inform team selection and on-court strategy for the upcoming fixture.
+  </div>
+
+</div>
+</body>
+</html>
