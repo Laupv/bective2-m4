@@ -109,24 +109,24 @@
   }
 
   /* ---------- DIVIDER ---------- */
-  .divider{
+  .divider, .net-divider{
     display:flex;
     align-items:center;
     gap:14px;
     margin:64px 0 36px;
   }
-  .divider .post{
+  .divider .post, .net-divider .post{
     width:8px;
     height:8px;
     border-radius:50%;
-    background:var(--ink);
+    background:var(--deep);
     flex:none;
   }
-  .divider .line{
+  .divider .line, .net-divider .line{
     flex:1;
     border-top:2px dashed var(--ink-35);
   }
-  .divider .tag{
+  .divider .tag, .net-divider .tag{
     font-family:"IBM Plex Mono",monospace;
     font-size:11px;
     letter-spacing:0.12em;
@@ -316,7 +316,7 @@
 
   .strength-box{
     background:var(--bg);
-    border-radius:10px;
+    border-radius:100px;
     padding:16px 18px;
     border:1px solid var(--ink-12);
   }
@@ -409,23 +409,14 @@
 
   /* ---------- FOOTER CTA ---------- */
   .cta-card{
-    background:var(--card);
-    border:1px solid var(--ink-12);
-    border-radius:14px;
-    padding:40px;
+    background:transparent;
+    border:none;
+    padding:0;
     text-align:center;
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:8px;
-  }
-
-  .cta-card .banner-text{
-    font-family:"Big Shoulders Display",sans-serif;
-    font-weight:700;
-    font-size:22px;
-    text-transform:uppercase;
-    max-width:520px;
   }
 
   .cta-card .subtext{
@@ -470,7 +461,7 @@
     .bar-line{ grid-template-columns:88px 1fr 56px; }
     .hero-stat-card{ padding:26px 22px; }
     .data-card{ padding:22px; }
-    .divider .tag{ font-size:9.5px; }
+    .divider .tag, .net-divider .tag{ font-size:9.5px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -672,18 +663,17 @@
   </section>
 
   <!-- DIVIDER 04 -->
-  <div class="divider">
-    <div class="post"></div>
-    <div class="line"></div>
-    <div class="tag">[ Full Report ]</div>
+  <div class="net-divider">
     <div class="line"></div>
     <div class="post"></div>
+    <span class="tag">Full Report</span>
+    <div class="post"></div>
+    <div class="line"></div>
   </div>
 
   <!-- FOOTER CTA -->
   <section>
     <div class="cta-card">
-      <div class="banner-text">This infographic is a summary brief of our opponent data.</div>
       <div class="subtext">Access complete match sheet histories, detailed game breakdowns, and full player rosters on the web report.</div>
       <a class="cta-button" href="https://laupv.github.io/bective2-m4/scouting-report" target="_blank" rel="noopener noreferrer">View Full Scouting Report →</a>
     </div>
